@@ -1,5 +1,6 @@
 import { Kafka, logLevel } from "kafkajs";
 import { getTopic, getLocalBroker } from "../config/config.js";
+import { redisClient } from "../redis/client.js";
 
 const isLocalBroker = getLocalBroker();
 const redpanda = new Kafka({
@@ -19,6 +20,13 @@ export async function connection() {
 
     await consumer.run({
       eachMessage: async ({ topic, partition, message }) => {
+        const msg = JSON.parse(message.value.toString())["message"];
+        const words = msg.split(" ");
+        console.log(words);
+
+        words.forEach((val) => {
+          redisClient.incr(val);
+        });
         console.log({
           value: message.value.toString(),
           date: convertTimestamp(message.timestamp),

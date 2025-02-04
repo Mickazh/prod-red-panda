@@ -31,7 +31,7 @@ async function start() {
     const user = getUser();
     const message =
       typeMessage === "texte"
-        ? getStringMessage(process.env.NUMBER_WORD)
+        ? getStringMessage(+process.env.NUMBER_WORD)
         : typeMessage === "nombre"
         ? getNumberMessage(configNumber)
         : "Config Error : choisir 'nombre' ou 'texte'";
