@@ -11,6 +11,10 @@ import {
   getTopic,
   getTypeMessage,
 } from "./config/config.js";
+import "dotenv/config";
+
+console.log(process.env.NUMBER_WORD);
+
 
 const configNumber = getConfigNumber();
 const typeMessage = getTypeMessage();
@@ -27,7 +31,7 @@ async function start() {
     const user = getUser();
     const message =
       typeMessage === "texte"
-        ? getStringMessage(3)
+        ? getStringMessage(process.env.NUMBER_WORD)
         : typeMessage === "nombre"
         ? getNumberMessage(configNumber)
         : "Config Error : choisir 'nombre' ou 'texte'";
